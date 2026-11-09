@@ -13,8 +13,10 @@ A single `.cmd` file that turns a Power BI Project (PBIP / PBIR / TMDL) folder i
 
 `PBIP_Context.txt` contains:
 
-1. A folder tree of the project.
+1. A list of every included file.
 2. The full contents of every text file, each preceded by a `FILE: relative\path` header.
+
+**Data is summarised, not dumped.** "Enter Data" tables (compressed in the TMDL/BIM) are decoded and described per column: columns with few distinct values (default 15 or fewer, e.g. Age) are listed in full with counts; high-cardinality columns (names, heights) show the distinct count, numeric min/max and a few samples. Change `MAXD` at the top of the script to adjust.
 
 Included file types: `.pbip .pbir .pbism .pbidataset .pbivis .json .tmdl .bim .platform .dax .m .pq .md .txt .xml .yaml .yml`
 
@@ -24,7 +26,8 @@ To include other file types, edit the `EXTS` line near the top of the script.
 
 ## Notes
 
-- Pure batch, no dependencies. Works on Windows 10/11.
+- A single .cmd (it calls the built-in Windows PowerShell internally); no installs needed. Works on Windows 10/11.
+- Only embedded Enter Data tables are summarised. Data loaded from external sources is not in the project files anyway.
 - Large legacy `report.json` files can be very big; consider PBIR format (enhanced report format) for smaller, more AI-friendly output.
 - Review the output before sharing: it may contain server names, queries or other details from your model.
 
